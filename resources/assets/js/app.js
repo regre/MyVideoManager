@@ -8,6 +8,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueRouter from 'vue-router';
+import YoutubeDash from './Youtube/YoutubeDash';
+import VideoDetail from './Youtube/VideoDetail';
+
+Vue.use(VueRouter);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,9 +20,21 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('youtube-dashboard', require('./Youtube/YoutubeDash.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('youtube-dashboard', require('./Youtube/YoutubeDash.vue'));
+
+window.eventBus = new Vue({});
+
+const routes = [
+	{path: '/', component: YoutubeDash, 'name': 'youtube-dash'},
+	{path: '/video/:id', component: VideoDetail, 'name': 'youtube-video'}
+
+];
+
+const router = new VueRouter({
+	routes
+});
 
 const app = new Vue({
-    el: '#app'
-});
+    router
+}).$mount('#app');
